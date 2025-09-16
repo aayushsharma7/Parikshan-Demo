@@ -55,8 +55,8 @@ export function Header({ onMenuClick }: HeaderProps) {
           </Button>
           <ThemeToggle />
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <DropdownMenuTrigger >
+              <Button variant="ghost" className="relative h-12 w-8 rounded-full md:-mb-5 md:mr-4">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user?.avatar || "/placeholder.svg"} alt={user?.name} />
                   <AvatarFallback>
