@@ -95,28 +95,31 @@ export function InternshipBrowser() {
   })
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-full overflow-hidden space-y-4 sm:space-y-6">
       {/* Search and Filters */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Find Your Perfect Internship</CardTitle>
-          <CardDescription>Search and filter through available internship opportunities</CardDescription>
+      <Card className="w-full">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg sm:text-xl">Find Your Perfect Internship</CardTitle>
+          <CardDescription className="text-sm">
+            Search and filter through available internship opportunities
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search by title, company, or skills..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+        <CardContent className="space-y-4">
+          <div className="w-full">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by title, company, or skills..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10"
+              />
             </div>
+          </div>
+
+          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
             <Select value={locationFilter} onValueChange={setLocationFilter}>
-              <SelectTrigger className="w-full md:w-48">
+              <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Location" />
               </SelectTrigger>
               <SelectContent>
@@ -129,7 +132,7 @@ export function InternshipBrowser() {
               </SelectContent>
             </Select>
             <Select value={durationFilter} onValueChange={setDurationFilter}>
-              <SelectTrigger className="w-full md:w-48">
+              <SelectTrigger className="w-full sm:w-40">
                 <SelectValue placeholder="Duration" />
               </SelectTrigger>
               <SelectContent>
@@ -140,20 +143,21 @@ export function InternshipBrowser() {
                 <SelectItem value="6">6 months</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline">
+            <Button variant="outline" className="w-full sm:w-auto bg-transparent">
               <Filter className="mr-2 h-4 w-4" />
-              More Filters
+              <span className="sm:hidden">Filters</span>
+              <span className="hidden sm:inline">More Filters</span>
             </Button>
           </div>
         </CardContent>
       </Card>
 
       {/* Results */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">{filteredInternships.length} internships found</h2>
+      <div className="w-full space-y-4">
+        <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+          <h2 className="text-base sm:text-lg font-semibold">{filteredInternships.length} internships found</h2>
           <Select defaultValue="recent">
-            <SelectTrigger className="w-48">
+            <SelectTrigger className="w-full sm:w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -165,74 +169,92 @@ export function InternshipBrowser() {
           </Select>
         </div>
 
-        <div className="grid gap-4">
+        <div className="w-full space-y-4">
           {filteredInternships.map((internship) => (
-            <Card key={internship.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start space-x-4">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={internship.logo || "/placeholder.svg"} alt={internship.company} />
-                      <AvatarFallback>
-                        <Building2 className="h-6 w-6" />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1">{internship.title}</h3>
-                      <p className="text-muted-foreground mb-2">{internship.company}</p>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-3">
-                        <div className="flex items-center">
-                          <MapPin className="h-4 w-4 mr-1" />
-                          {internship.location}
-                        </div>
-                        <div className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" />
-                          {internship.duration}
-                        </div>
-                        <div className="flex items-center">
-                          <DollarSign className="h-4 w-4 mr-1" />
-                          {internship.stipend}
-                        </div>
-                        <Badge variant="outline">{internship.type}</Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-3">{internship.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {internship.skills.map((skill) => (
-                          <Badge key={skill} variant="secondary" className="text-xs">
-                            {skill}
-                          </Badge>
-                        ))}
+            <Card key={internship.id} className="w-full hover:shadow-md transition-shadow">
+              <CardContent className="p-4 sm:p-6">
+                <div className="space-y-4">
+                  {/* Header section */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start space-x-3 flex-1 min-w-0">
+                      <Avatar className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0">
+                        <AvatarImage src={internship.logo || "/placeholder.svg"} alt={internship.company} />
+                        <AvatarFallback>
+                          <Building2 className="h-4 w-4 sm:h-6 sm:w-6" />
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base sm:text-lg font-semibold mb-1 truncate">{internship.title}</h3>
+                        <p className="text-sm text-muted-foreground mb-2 truncate">{internship.company}</p>
                       </div>
                     </div>
+                    <div className="flex items-center space-x-1 flex-shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleSave(internship.id)}
+                        className={`h-8 w-8 p-0 ${savedInternships.includes(internship.id) ? "text-red-500" : ""}`}
+                      >
+                        <Heart
+                          className={`h-4 w-4 ${savedInternships.includes(internship.id) ? "fill-current" : ""}`}
+                        />
+                      </Button>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Share className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => toggleSave(internship.id)}
-                      className={savedInternships.includes(internship.id) ? "text-red-500" : ""}
-                    >
-                      <Heart className={`h-4 w-4 ${savedInternships.includes(internship.id) ? "fill-current" : ""}`} />
-                    </Button>
-                    <Button variant="ghost" size="icon">
-                      <Share className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                    <span>Posted {internship.posted}</span>
-                    <div className="flex items-center">
-                      <Calendar className="h-3 w-3 mr-1" />
-                      Deadline: {internship.deadline}
+                  {/* Details section */}
+                  <div className="space-y-3">
+                    <div className="flex flex-col space-y-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:space-y-0 text-sm text-muted-foreground">
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+                        <span className="truncate">{internship.location}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1 flex-shrink-0" />
+                        <span>{internship.duration}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <DollarSign className="h-4 w-4 mr-1 flex-shrink-0" />
+                        <span>{internship.stipend}</span>
+                      </div>
+                      <Badge variant="outline" className="w-fit">
+                        {internship.type}
+                      </Badge>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground line-clamp-2">{internship.description}</p>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {internship.skills.map((skill) => (
+                        <Badge key={skill} variant="secondary" className="text-xs px-2 py-1">
+                          {skill}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
-                  <div className="flex space-x-2">
-                    <Button variant="outline" size="sm">
-                      View Details
-                    </Button>
-                    <Button size="sm">Apply Now</Button>
+
+                  {/* Footer section */}
+                  <div className="pt-3 border-t space-y-3 sm:space-y-0">
+                    <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                      <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 text-xs text-muted-foreground">
+                        <span>Posted {internship.posted}</span>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          Deadline: {internship.deadline}
+                        </div>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button variant="outline" size="sm" className="flex-1 sm:flex-none bg-transparent">
+                          View Details
+                        </Button>
+                        <Button size="sm" className="flex-1 sm:flex-none">
+                          Apply Now
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>

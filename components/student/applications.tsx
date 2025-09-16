@@ -88,16 +88,16 @@ export function StudentApplications() {
   })
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-2xl md:text-3xl font-bold text-balance">My Applications</h1>
-        <p className="text-muted-foreground mt-2">Track and manage your internship applications</p>
+    <div className="w-full max-w-full overflow-hidden space-y-4 sm:space-y-6">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-balance">My Applications</h1>
+        <p className="text-muted-foreground mt-2 text-sm sm:text-base">Track and manage your internship applications</p>
       </div>
 
       {/* Filters */}
       <Card>
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-4">
+        <CardContent className="pt-4 sm:pt-6">
+          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -125,53 +125,55 @@ export function StudentApplications() {
       </Card>
 
       {/* Applications List */}
-      <div className="grid gap-4">
+      <div className="grid gap-3 sm:gap-4">
         {filteredApplications.map((application) => (
           <Card key={application.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <Avatar className="h-12 w-12 flex-shrink-0">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex flex-col space-y-3 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4">
+                <Avatar className="h-10 w-10 sm:h-12 sm:w-12 flex-shrink-0 self-start sm:self-center">
                   <AvatarImage src={application.logo || "/placeholder.svg"} alt={application.company} />
                   <AvatarFallback>
-                    <Building2 className="h-6 w-6" />
+                    <Building2 className="h-4 w-4 sm:h-6 sm:w-6" />
                   </AvatarFallback>
                 </Avatar>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-lg font-semibold truncate">{application.title}</h3>
-                      <p className="text-muted-foreground truncate">{application.company}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{application.description}</p>
+                      <h3 className="text-base sm:text-lg font-semibold truncate">{application.title}</h3>
+                      <p className="text-muted-foreground text-sm truncate">{application.company}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-2">
+                        {application.description}
+                      </p>
                     </div>
-                    <Badge className={`${getStatusColor(application.status)} flex-shrink-0`}>
+                    <Badge className={`${getStatusColor(application.status)} flex-shrink-0 self-start sm:self-center`}>
                       {application.status}
                     </Badge>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-muted-foreground">
+                  <div className="flex flex-col space-y-2 sm:flex-row sm:flex-wrap sm:items-center sm:space-y-0 sm:gap-4 mt-3 text-xs sm:text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      <span>{application.location}</span>
+                      <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                      <span className="truncate">{application.location}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
+                      <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                       <span>{application.duration}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
+                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                       <span>Applied: {application.appliedDate}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
+                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                       <span>Deadline: {application.deadline}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex gap-2 flex-shrink-0">
-                  <Button variant="outline" size="sm">
-                    <Eye className="h-4 w-4 mr-2" />
+                <div className="flex gap-2 flex-shrink-0 self-end sm:self-center">
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm bg-transparent">
+                    <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                     View Details
                   </Button>
                 </div>
@@ -183,8 +185,8 @@ export function StudentApplications() {
 
       {filteredApplications.length === 0 && (
         <Card>
-          <CardContent className="text-center py-12">
-            <p className="text-muted-foreground">No applications found matching your criteria.</p>
+          <CardContent className="text-center py-8 sm:py-12">
+            <p className="text-muted-foreground text-sm sm:text-base">No applications found matching your criteria.</p>
           </CardContent>
         </Card>
       )}

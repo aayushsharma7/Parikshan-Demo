@@ -24,8 +24,7 @@ import { useState } from "react"
 function AppContent() {
   const { user, isLoading, logout } = useAuth()
   const [currentView, setCurrentView] = useState("dashboard")
-
-  console.log("[v0] AppContent render - user:", user, "isLoading:", isLoading, "currentView:", currentView)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   if (isLoading) {
     return (
@@ -37,7 +36,7 @@ function AppContent() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/50">
+      <div className="min-h-screen flex items-center justify-center bg-muted/50 p-4">
         <LoginForm />
       </div>
     )
@@ -46,10 +45,12 @@ function AppContent() {
   const renderContent = () => {
     if (!user?.role) {
       return (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center p-8">
-            <h2 className="text-xl font-semibold mb-2">Access Error</h2>
-            <p className="text-muted-foreground">Unable to determine user role. Please contact support.</p>
+        <div className="flex items-center justify-center min-h-[400px] p-4">
+          <div className="text-center p-4 sm:p-8">
+            <h2 className="text-lg sm:text-xl font-semibold mb-2">Access Error</h2>
+            <p className="text-muted-foreground text-sm sm:text-base">
+              Unable to determine user role. Please contact support.
+            </p>
             <Button onClick={logout} className="mt-4">
               Sign Out
             </Button>
@@ -57,8 +58,6 @@ function AppContent() {
         </div>
       )
     }
-
-    console.log("[v0] Rendering content for role:", user.role, "view:", currentView)
 
     if (user.role === "student") {
       switch (currentView) {
@@ -117,25 +116,27 @@ function AppContent() {
       switch (currentView) {
         case "dashboard":
           return (
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-balance">Welcome back, {user.name}!</h1>
-                <p className="text-muted-foreground mt-2">Oversee the entire internship management system.</p>
+            <div className="w-full max-w-full overflow-hidden">
+              <div className="mb-6 sm:mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold text-balance">Welcome back, {user.name}!</h1>
+                <p className="text-muted-foreground mt-2 text-sm sm:text-base">
+                  Oversee the entire internship management system.
+                </p>
               </div>
 
-              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                <div className="bg-card p-6 rounded-lg border">
+              <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="bg-card p-4 sm:p-6 rounded-lg border">
                   <h3 className="font-semibold mb-2">Quick Stats</h3>
                   <p className="text-2xl font-bold text-primary">156</p>
                   <p className="text-sm text-muted-foreground">Total Users</p>
                 </div>
 
-                <div className="bg-card p-6 rounded-lg border">
+                <div className="bg-card p-4 sm:p-6 rounded-lg border">
                   <h3 className="font-semibold mb-2">Recent Activity</h3>
                   <p className="text-sm text-muted-foreground">System maintenance completed successfully</p>
                 </div>
 
-                <div className="bg-card p-6 rounded-lg border">
+                <div className="bg-card p-4 sm:p-6 rounded-lg border sm:col-span-2 lg:col-span-1">
                   <h3 className="font-semibold mb-2">Upcoming</h3>
                   <p className="text-sm text-muted-foreground">Monthly system report generation</p>
                 </div>
@@ -151,12 +152,11 @@ function AppContent() {
       }
     }
 
-    // Now returns proper error message for unrecognized roles
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center p-8">
-          <h2 className="text-xl font-semibold mb-2">Unrecognized Role</h2>
-          <p className="text-muted-foreground">
+      <div className="flex items-center justify-center min-h-[400px] p-4">
+        <div className="text-center p-4 sm:p-8">
+          <h2 className="text-lg sm:text-xl font-semibold mb-2">Unrecognized Role</h2>
+          <p className="text-muted-foreground text-sm sm:text-base">
             Your account role ({user.role}) is not recognized. Please contact support.
           </p>
           <Button onClick={logout} className="mt-4">
@@ -167,12 +167,31 @@ function AppContent() {
     )
   }
 
+  const handleNavigate = (view: string) => {
+    setCurrentView(view)
+    setSidebarOpen(false) // Close sidebar on mobile after navigation
+  }
+
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar className="border-r flex-shrink-0" onNavigate={setCurrentView} />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-4 md:p-6">{renderContent()}</main>
+    <div className="flex min-h-screen bg-background overflow-x-hidden">
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      <Sidebar
+        className={`
+          fixed lg:static inset-y-0 left-0 z-50 w-64 transform transition-transform duration-200 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+          border-r flex-shrink-0
+        `}
+        onNavigate={handleNavigate}
+      />
+
+      <div className="flex-1 flex flex-col overflow-hidden w-full min-w-0">
+        <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 md:p-6 w-full max-w-full">
+          {renderContent()}
+        </main>
       </div>
     </div>
   )

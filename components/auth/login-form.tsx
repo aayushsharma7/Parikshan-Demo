@@ -26,35 +26,43 @@ export function LoginForm() {
 
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-bold text-primary">Prashikshan</CardTitle>
-        <CardDescription>Sign in to your internship management account</CardDescription>
+      <CardHeader className="text-center space-y-2">
+        <CardTitle className="text-xl sm:text-2xl font-bold text-primary">Prashikshan</CardTitle>
+        <CardDescription className="text-sm sm:text-base">
+          Sign in to your internship management account
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm">
+              Email
+            </Label>
             <Input
               id="email"
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="h-10"
               required
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm">
+              Password
+            </Label>
             <Input
               id="password"
               type="password"
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="h-10"
               required
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full h-10" disabled={isLoading}>
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -65,14 +73,16 @@ export function LoginForm() {
             )}
           </Button>
         </form>
-        <div className="mt-4 text-sm text-muted-foreground">
-          <p className="mb-2">Demo accounts:</p>
-          <ul className="space-y-1 text-xs">
-            <li>Student: student@university.edu</li>
-            <li>Faculty: faculty@university.edu</li>
-            <li>Industry: partner@company.com</li>
-            <li>Admin: admin@prashikshan.gov</li>
-          </ul>
+        <div className="mt-4 text-xs sm:text-sm text-muted-foreground">
+          <p className="mb-2 font-medium">Demo accounts:</p>
+          <div className="space-y-1 text-xs">
+            <div className="grid grid-cols-1 gap-1">
+              <div>Student: student@university.edu</div>
+              <div>Faculty: faculty@university.edu</div>
+              <div>Industry: partner@company.com</div>
+              <div>Admin: admin@prashikshan.gov</div>
+            </div>
+          </div>
         </div>
       </CardContent>
     </Card>

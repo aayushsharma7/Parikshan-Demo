@@ -11,10 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useAuth } from "@/components/auth/auth-context"
-import { Bell, LogOut, Settings, User } from "lucide-react"
+import { Bell, LogOut, Settings, User, Menu } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-export function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void
+}
+
+export function Header({ onMenuClick }: HeaderProps) {
   const { user, logout } = useAuth()
 
   const getRoleDisplayName = (role: string) => {
@@ -34,9 +38,18 @@ export function Header() {
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="flex h-14 items-center px-4">
-        <div className="ml-auto flex items-center space-x-4">
-          <Button variant="ghost" size="icon">
+      <div className="flex h-14 items-center px-3 sm:px-4">
+        <Button variant="ghost" size="icon" className="lg:hidden mr-2" onClick={onMenuClick}>
+          <Menu className="h-5 w-5" />
+          <span className="sr-only">Toggle menu</span>
+        </Button>
+
+        <div className="flex items-center lg:hidden">
+          <h1 className="text-lg font-semibold text-primary">Prashikshan</h1>
+        </div>
+
+        <div className="ml-auto flex items-center space-x-2 sm:space-x-4">
+          <Button variant="ghost" size="icon" className="hidden sm:flex">
             <Bell className="h-4 w-4" />
             <span className="sr-only">Notifications</span>
           </Button>
@@ -65,6 +78,10 @@ export function Header() {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
+              <DropdownMenuItem className="sm:hidden">
+                <Bell className="mr-2 h-4 w-4" />
+                <span>Notifications</span>
+              </DropdownMenuItem>
               <DropdownMenuItem>
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>

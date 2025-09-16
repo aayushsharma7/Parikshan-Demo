@@ -99,20 +99,20 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
       <div className="space-y-4 py-4">
         <div className="px-3 py-2">
           <div className="flex items-center mb-4 px-2">
-            <GraduationCap className="h-8 w-8 text-primary mr-2" />
-            <h2 className="text-lg font-semibold text-primary">Prashikshan</h2>
+            <GraduationCap className="h-6 w-6 sm:h-8 sm:w-8 text-primary mr-2" />
+            <h2 className="text-base sm:text-lg font-semibold text-primary">Prashikshan</h2>
           </div>
           <div className="space-y-1">
-            <ScrollArea className="h-[calc(100vh-8rem)]">
+            <ScrollArea className="h-[calc(100vh-8rem)] touch-pan-y">
               {navItems.map((item) => (
                 <Button
                   key={item.href}
                   variant={currentView === item.href ? "secondary" : "ghost"}
-                  className="w-full justify-start mb-1"
+                  className="w-full justify-start mb-1 h-10 px-3 text-sm"
                   onClick={() => handleNavigation(item.href)}
                 >
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {item.label}
+                  <item.icon className="mr-3 h-4 w-4 flex-shrink-0" />
+                  <span className="truncate">{item.label}</span>
                 </Button>
               ))}
             </ScrollArea>

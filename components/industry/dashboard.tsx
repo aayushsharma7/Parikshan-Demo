@@ -147,77 +147,82 @@ export function IndustryDashboard() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-full overflow-hidden space-y-4 sm:space-y-6">
       {/* Stats Overview */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Internships</CardTitle>
-            <Briefcase className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Active Internships</CardTitle>
+            <Briefcase className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
+            <div className="text-lg sm:text-2xl font-bold">3</div>
             <p className="text-xs text-muted-foreground">+1 from last month</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Applications</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Total Applications</CardTitle>
+            <FileText className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">112</div>
+            <div className="text-lg sm:text-2xl font-bold">112</div>
             <p className="text-xs text-muted-foreground">This month</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Interns</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Active Interns</CardTitle>
+            <Users className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">5</div>
+            <div className="text-lg sm:text-2xl font-bold">5</div>
             <p className="text-xs text-muted-foreground">Currently working</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-xs sm:text-sm font-medium">Completion Rate</CardTitle>
+            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">94%</div>
+            <div className="text-lg sm:text-2xl font-bold">94%</div>
             <Progress value={94} className="mt-2" />
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Posted Internships */}
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
             <div>
-              <CardTitle>Posted Internships</CardTitle>
-              <CardDescription>Manage your internship listings</CardDescription>
+              <CardTitle className="text-base sm:text-lg">Posted Internships</CardTitle>
+              <CardDescription className="text-sm">Manage your internship listings</CardDescription>
             </div>
-            <Button>
+            <Button size="sm" className="w-full sm:w-auto">
               <Plus className="mr-2 h-4 w-4" />
               Post New
             </Button>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4">
             {mockInternships.map((internship) => (
-              <div key={internship.id} className="flex items-center space-x-4 p-3 border rounded-lg">
+              <div
+                key={internship.id}
+                className="flex flex-col space-y-2 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 p-2 sm:p-3 border rounded-lg"
+              >
                 <div className="flex-1 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium leading-none">{internship.title}</p>
-                    <Badge className={getStatusColor(internship.status)}>{internship.status}</Badge>
+                  <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                    <p className="text-xs sm:text-sm font-medium leading-none">{internship.title}</p>
+                    <Badge className={`${getStatusColor(internship.status)} self-start sm:self-center`}>
+                      {internship.status}
+                    </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{internship.department}</p>
-                  <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">{internship.department}</p>
+                  <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:space-y-0 sm:space-x-4 text-xs text-muted-foreground">
                     <div className="flex items-center">
                       <MapPin className="h-3 w-3 mr-1" />
-                      {internship.location}
+                      <span className="truncate">{internship.location}</span>
                     </div>
                     <div className="flex items-center">
                       <Clock className="h-3 w-3 mr-1" />
@@ -229,11 +234,11 @@ export function IndustryDashboard() {
                     </div>
                   </div>
                 </div>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 self-end sm:self-center">
                   <Button variant="outline" size="sm">
-                    <Eye className="h-4 w-4" />
+                    <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="text-xs sm:text-sm bg-transparent">
                     Edit
                   </Button>
                 </div>
@@ -245,13 +250,13 @@ export function IndustryDashboard() {
         {/* Recent Candidates */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Candidates</CardTitle>
-            <CardDescription>Review and manage candidate applications</CardDescription>
+            <CardTitle className="text-base sm:text-lg">Recent Candidates</CardTitle>
+            <CardDescription className="text-sm">Review and manage candidate applications</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4">
             {mockCandidates.map((candidate) => (
-              <div key={candidate.id} className="flex items-center space-x-4 p-3 border rounded-lg">
-                <Avatar className="h-10 w-10">
+              <div key={candidate.id} className="flex items-start space-x-3 p-2 sm:p-3 border rounded-lg">
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                   <AvatarImage src={candidate.avatar || "/placeholder.svg"} alt={candidate.name} />
                   <AvatarFallback>
                     {candidate.name
@@ -260,15 +265,15 @@ export function IndustryDashboard() {
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-medium leading-none">{candidate.name}</p>
-                    <div className="flex items-center">
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                    <p className="text-xs sm:text-sm font-medium leading-none truncate">{candidate.name}</p>
+                    <div className="flex items-center self-start sm:self-center">
                       <Star className="h-3 w-3 text-yellow-500 mr-1" />
                       <span className="text-xs">{candidate.rating}</span>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-muted-foreground truncate">
                     {candidate.course}, {candidate.year} - {candidate.university}
                   </p>
                   <div className="flex flex-wrap gap-1">
@@ -278,14 +283,16 @@ export function IndustryDashboard() {
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-xs text-muted-foreground">Applied for: {candidate.appliedFor}</p>
-                    <Badge className={getStatusColor(candidate.status)}>{candidate.status}</Badge>
+                  <div className="flex flex-col space-y-1 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+                    <p className="text-xs text-muted-foreground truncate">Applied for: {candidate.appliedFor}</p>
+                    <Badge className={`${getStatusColor(candidate.status)} self-start sm:self-center`}>
+                      {candidate.status}
+                    </Badge>
                   </div>
                 </div>
               </div>
             ))}
-            <Button variant="outline" className="w-full bg-transparent">
+            <Button variant="outline" className="w-full bg-transparent text-sm">
               View All Candidates
             </Button>
           </CardContent>
@@ -295,15 +302,15 @@ export function IndustryDashboard() {
       {/* Active Interns */}
       <Card>
         <CardHeader>
-          <CardTitle>Active Interns</CardTitle>
-          <CardDescription>Monitor intern progress and performance</CardDescription>
+          <CardTitle className="text-base sm:text-lg">Active Interns</CardTitle>
+          <CardDescription className="text-sm">Monitor intern progress and performance</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
             {mockActiveInterns.map((intern) => (
-              <div key={intern.id} className="p-4 border rounded-lg">
+              <div key={intern.id} className="p-3 sm:p-4 border rounded-lg">
                 <div className="flex items-center space-x-3 mb-3">
-                  <Avatar className="h-10 w-10">
+                  <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                     <AvatarImage src={intern.avatar || "/placeholder.svg"} alt={intern.name} />
                     <AvatarFallback>
                       {intern.name
@@ -312,11 +319,11 @@ export function IndustryDashboard() {
                         .join("")}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">{intern.name}</p>
-                    <p className="text-xs text-muted-foreground">{intern.position}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs sm:text-sm font-medium truncate">{intern.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{intern.position}</p>
                   </div>
-                  <Badge className={getPerformanceColor(intern.performance)}>{intern.performance}</Badge>
+                  <Badge className={`${getPerformanceColor(intern.performance)} text-xs`}>{intern.performance}</Badge>
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs">
@@ -324,16 +331,16 @@ export function IndustryDashboard() {
                     <span>{intern.progress}%</span>
                   </div>
                   <Progress value={intern.progress} className="h-2" />
-                  <div className="flex justify-between text-xs text-muted-foreground">
+                  <div className="flex flex-col space-y-1 sm:flex-row sm:justify-between sm:space-y-0 text-xs text-muted-foreground">
                     <span>Started: {intern.startDate}</span>
                     <span>Mentor: {intern.mentor}</span>
                   </div>
                 </div>
                 <div className="flex space-x-2 mt-3">
-                  <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                  <Button variant="outline" size="sm" className="flex-1 bg-transparent text-xs">
                     View Details
                   </Button>
-                  <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                  <Button variant="outline" size="sm" className="flex-1 bg-transparent text-xs">
                     Message
                   </Button>
                 </div>
@@ -346,25 +353,25 @@ export function IndustryDashboard() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Common tasks and shortcuts</CardDescription>
+          <CardTitle className="text-base sm:text-lg">Quick Actions</CardTitle>
+          <CardDescription className="text-sm">Common tasks and shortcuts</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-            <Button className="justify-start bg-transparent" variant="outline">
-              <Plus className="mr-2 h-4 w-4" />
+          <div className="grid gap-2 sm:gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <Button className="justify-start bg-transparent text-xs sm:text-sm" variant="outline">
+              <Plus className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               Post Internship
             </Button>
-            <Button className="justify-start bg-transparent" variant="outline">
-              <Users className="mr-2 h-4 w-4" />
+            <Button className="justify-start bg-transparent text-xs sm:text-sm" variant="outline">
+              <Users className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               Review Applications
             </Button>
-            <Button className="justify-start bg-transparent" variant="outline">
-              <Calendar className="mr-2 h-4 w-4" />
+            <Button className="justify-start bg-transparent text-xs sm:text-sm" variant="outline">
+              <Calendar className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               Schedule Interviews
             </Button>
-            <Button className="justify-start bg-transparent" variant="outline">
-              <FileText className="mr-2 h-4 w-4" />
+            <Button className="justify-start bg-transparent text-xs sm:text-sm" variant="outline">
+              <FileText className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               Generate Reports
             </Button>
           </div>
